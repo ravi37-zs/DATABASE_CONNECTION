@@ -20,11 +20,18 @@ func main() {
 
 		fmt.Errorf("%v", err)
 	}
+	// calling set function
 	output := s.Set(c)
 	fmt.Println(output)
 	var car vehical.Car
-
+	//calling get function
 	car = s.Get(234)
-	fmt.Printf("Id:%v\nName:%v\nModel:%v\nEngineType:%v", car.Id, car.Name, car.Model, car.EngineType)
+	fmt.Printf("Id:%v\nName:%v\nModel:%v\nEngineType:%v\n", car.Id, car.Name, car.Model, car.EngineType)
+
+	//calling delete function
+
+	output1 := s.Delete(234)
+
+	fmt.Println(output1)
 
 }
