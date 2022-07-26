@@ -6,7 +6,7 @@ import (
 )
 
 type Store struct {
-	db *sql.DB
+	Db *sql.DB
 }
 type Car struct {
 	Id         int
@@ -18,7 +18,7 @@ type Car struct {
 func (s Store) Get(id int) (c Car) {
 
 	if id > 0 {
-		row, err := s.db.Query("select * from Car where id=?;", id)
+		row, err := s.Db.Query("select * from Car where id=?;", id)
 		if err != nil {
 			fmt.Errorf("%v", err)
 		}
@@ -36,7 +36,7 @@ func (s Store) Get(id int) (c Car) {
 }
 
 func (s Store) Set(c Car) bool {
-	res, err := s.db.Exec("insert ignore into Car values(?,?,?,?)", c.Id, c.Name, c.Model, c.EngineType)
+	res, err := s.Db.Exec("insert ignore into Car values(?,?,?,?)", c.Id, c.Name, c.Model, c.EngineType)
 
 	rows, err := res.RowsAffected()
 	if err != nil {
@@ -49,7 +49,7 @@ func (s Store) Set(c Car) bool {
 }
 
 func (s Store) Delete(Id int) bool {
-	res, err := s.db.Exec("DELETE FROM Car WHERE id=?;", Id)
+	res, err := s.Db.Exec("DELETE FROM Car WHERE id=?;", Id)
 	rows, err := res.RowsAffected()
 	if err != nil {
 		fmt.Errorf("%v", err)

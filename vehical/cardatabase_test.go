@@ -22,7 +22,7 @@ func TestSet(t *testing.T) {
 	var s Store
 	var err error
 	myconfig := driver.MysqlConfig{"root", "Ra1190@cm", "3306", "localhost", "test"}
-	s.db, err = driver.ConnectMysql(myconfig)
+	s.Db, err = driver.ConnectMysql(myconfig)
 	if err != nil {
 		fmt.Errorf("%v", err)
 	}
@@ -53,7 +53,7 @@ func TestGet(t *testing.T) {
 	var s Store
 	var err error
 	myconfig := driver.MysqlConfig{"root", "Ra1190@cm", "3306", "localhost", "test"}
-	s.db, err = driver.ConnectMysql(myconfig)
+	s.Db, err = driver.ConnectMysql(myconfig)
 	if err != nil {
 		fmt.Errorf("%v", err)
 	}
@@ -79,7 +79,7 @@ func TestDelete(t *testing.T) {
 	var s Store
 	var err error
 	myConfig := driver.MysqlConfig{User: "root", Pass: "Ra1190@cm", Port: "3306", Host: "localhost", Dbname: "test"}
-	s.db, err = driver.ConnectMysql(myConfig)
+	s.Db, err = driver.ConnectMysql(myConfig)
 	if err == nil {
 	}
 	for i, value := range testcases {
