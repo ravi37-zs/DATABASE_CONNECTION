@@ -18,7 +18,7 @@ type Car struct {
 func (s Store) Get(id int) (c Car) {
 
 	if id > 0 {
-		row, err := s.db.Query("select * from Car where id=?;", id)
+		row, err := s.db.Query("select * from Car where id", id)
 		if err != nil {
 			fmt.Errorf("%v", err)
 		}
@@ -36,8 +36,13 @@ func (s Store) Get(id int) (c Car) {
 }
 
 func (s Store) Set(c Car) bool {
-	res, err := s.db.Exec("insert ignore into Car values(?,?,?,?)", c.Id, c.Name, c.Model, c.EngineType)
+	res, err := s.db.Exec("insert into Car values(?,?,?,?)", c.Id, c.Name, c.Model, c.EngineType)
+	//fmt.Println("helooooooooooooooooooooo")
 
+	if err != nil {
+
+		fmt.Printf("%v this is error in line 44", err)
+	}
 	rows, err := res.RowsAffected()
 	if err != nil {
 		_ = fmt.Errorf("%v", err)
