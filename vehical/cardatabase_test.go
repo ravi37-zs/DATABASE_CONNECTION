@@ -16,6 +16,7 @@ func TestSet(t *testing.T) {
 		{"valid values", Car{1, "Safari", "MGN1", "Petrol"}, true},
 		{"valid values", Car{2, "Wagner", "FHG", "Petrol"}, true},
 		{"valid values", Car{3, "Benz", "MGN1", "Diesel"}, true},
+		{"valid values", Car{3, "Benz", "C-Class", "Diesel"}, false},
 		{"valid values", Car{4, "XUV", "MGN2", "Petrol"}, true},
 	}
 	var s Store
@@ -28,10 +29,15 @@ func TestSet(t *testing.T) {
 	defer db.Close()
 	// now we execute our method
 	for i, value := range testcases {
-
-		mock.ExpectExec("insert into Car values").
-			WithArgs(value.input.Id, value.input.Name, value.input.Model, value.input.EngineType).
-			WillReturnResult(sqlmock.NewResult(1, 1)).WillReturnError(err)
+		if value.expectedOutput == true {
+			mock.ExpectExec("insert into Car values").
+				WithArgs(value.input.Id, value.input.Name, value.input.Model, value.input.EngineType).
+				WillReturnResult(sqlmock.NewResult(1, 1)).WillReturnError(err)
+		} else {
+			mock.ExpectExec("insert into Car values").
+				WithArgs(value.input.Id, value.input.Name, value.input.Model, value.input.EngineType).
+				WillReturnResult(sqlmock.NewResult(1, 0)).WillReturnError(err)
+		}
 		output := s.Set(value.input)
 		if output != value.expectedOutput {
 			t.Errorf("failed  output %v test case failed %v", output, i+1)
