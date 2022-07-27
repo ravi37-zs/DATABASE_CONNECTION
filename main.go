@@ -11,5 +11,8 @@ func main() {
 
 	db, err := driver.ConnectMysql(myconfig)
 	fmt.Println(db, err)
+<<<<<<< HEAD
 	fmt.Println("this is ravi1")
+=======
+
 }
