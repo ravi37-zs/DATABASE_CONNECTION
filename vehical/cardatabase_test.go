@@ -56,7 +56,6 @@ func TestGet(t *testing.T) {
 	}{
 
 		{"valid value", 4, Car{4, "XUV", "MGN2", "Petrol"}},
-		{"negative id`s not allowed", -4, Car{0, "", "", ""}},
 		{"valid value", 1, Car{1, "Safari", "MGN1", "Petrol"}},
 		{"valid value", 2, Car{2, "Wagner", "FHG", "Petrol"}},
 	}
@@ -69,8 +68,11 @@ func TestGet(t *testing.T) {
 	}
 	defer db.Close()
 	for i, value := range testcases {
-		mock.ExpectQuery("select * from Car where id ").
-			WithArgs(value.id).WillReturnRows().WillReturnError(err)
+
+		rows := sqlmock.NewRows([]string{"Id", "Name", "Model", "EngineType"}).
+			AddRow(value.expectedOutput.Id, value.expectedOutput.Name, value.expectedOutput.Model, value.expectedOutput.EngineType)
+		mock.ExpectQuery("select (.+) from Car where id=?").
+			WithArgs(value.id).WillReturnRows(rows).WillReturnError(err)
 		output := s.Get(value.id)
 		if output != value.expectedOutput {
 			t.Errorf("failed  output %v test case failed %v", output, i+1)

@@ -18,9 +18,10 @@ type Car struct {
 func (s Store) Get(id int) (c Car) {
 
 	if id > 0 {
-		row, err := s.db.Query("select * from Car where id", id)
+		row, err := s.db.Query("select * from Car where id=?", id)
 		if err != nil {
 			fmt.Errorf("%v", err)
+			fmt.Printf("%v this is error in line 24", err)
 		}
 		row.Next()
 		row.Scan(&c.Id, &c.Name, &c.Model, &c.EngineType)
@@ -58,6 +59,7 @@ func (s Store) Delete(Id int) bool {
 	rows, err := res.RowsAffected()
 	if err != nil {
 		fmt.Errorf("%v", err)
+
 	}
 	if rows == 0 {
 		return false
