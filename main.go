@@ -11,4 +11,5 @@ func main() {
 
 	db, err := driver.ConnectMysql(myconfig)
 	fmt.Println(db, err)
+	fmt.Println("this is merge file")
 }
