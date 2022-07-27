@@ -17,22 +17,17 @@ type Car struct {
 
 func (s Store) Get(id int) (c Car) {
 
-	if id > 0 {
-		row, err := s.db.Query("select * from Car where id=?", id)
-		if err != nil {
-			fmt.Errorf("%v", err)
-			fmt.Printf("%v this is error in line 24", err)
-		}
-		row.Next()
-		row.Scan(&c.Id, &c.Name, &c.Model, &c.EngineType)
-		row.Close()
-		return
-		//}
+	if id < 0 {
+		return Car{}
 	}
-	c.Id = 0
-	c.Name = ""
-	c.Model = ""
-	c.EngineType = ""
+	row, err := s.db.Query("select * from Car where id=?", id)
+	if err != nil {
+		fmt.Errorf("%v", err)
+		fmt.Printf("%v this is error in line 24", err)
+	}
+	row.Next()
+	row.Scan(&c.Id, &c.Name, &c.Model, &c.EngineType)
+	row.Close()
 	return
 }
 
@@ -40,14 +35,11 @@ func (s Store) Set(c Car) bool {
 	res, err := s.db.Exec("insert into Car values(?,?,?,?)", c.Id, c.Name, c.Model, c.EngineType)
 	//fmt.Println("helooooooooooooooooooooo")
 
-	if err != nil {
-
-		fmt.Printf("%v this is error in line 44", err)
-	}
-	rows, err := res.RowsAffected()
+	rows, _ := res.RowsAffected()
 	if err != nil {
 		_ = fmt.Errorf("%v", err)
 	}
+
 	if rows == 0 {
 		return false
 	}

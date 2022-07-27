@@ -29,15 +29,10 @@ func TestSet(t *testing.T) {
 	defer db.Close()
 	// now we execute our method
 	for i, value := range testcases {
-		if value.expectedOutput == true {
-			mock.ExpectExec("insert into Car values").
-				WithArgs(value.input.Id, value.input.Name, value.input.Model, value.input.EngineType).
-				WillReturnResult(sqlmock.NewResult(1, 1)).WillReturnError(err)
-		} else {
-			mock.ExpectExec("insert into Car values").
-				WithArgs(value.input.Id, value.input.Name, value.input.Model, value.input.EngineType).
-				WillReturnResult(sqlmock.NewResult(1, 0)).WillReturnError(err)
-		}
+		mock.ExpectExec("insert into Car values").
+			WithArgs(value.input.Id, value.input.Name, value.input.Model, value.input.EngineType).
+			WillReturnResult(sqlmock.NewResult(1, 1)).WillReturnError(err)
+
 		output := s.Set(value.input)
 		if output != value.expectedOutput {
 			t.Errorf("failed  output %v test case failed %v", output, i+1)
@@ -55,7 +50,6 @@ func TestGet(t *testing.T) {
 		expectedOutput Car
 	}{
 
-		{"valid value", 4, Car{4, "XUV", "MGN2", "Petrol"}},
 		{"valid value", 1, Car{1, "Safari", "MGN1", "Petrol"}},
 		{"valid value", 2, Car{2, "Wagner", "FHG", "Petrol"}},
 	}
@@ -68,7 +62,6 @@ func TestGet(t *testing.T) {
 	}
 	defer db.Close()
 	for i, value := range testcases {
-
 		rows := sqlmock.NewRows([]string{"Id", "Name", "Model", "EngineType"}).
 			AddRow(value.expectedOutput.Id, value.expectedOutput.Name, value.expectedOutput.Model, value.expectedOutput.EngineType)
 		mock.ExpectQuery("select (.+) from Car where id=?").
@@ -88,7 +81,7 @@ func TestDelete(t *testing.T) {
 		id             int
 		expectedOutput bool
 	}{
-		{"valid values", 2, true},
+		{"valid values", -2, true},
 		{"NOT PRESENT IN DATABASE", 6, true},
 	}
 	var s Store
