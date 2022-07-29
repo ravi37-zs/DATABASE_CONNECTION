@@ -4,5 +4,12 @@ import "fmt"
 
 func main() {
 
-	fmt.Println("hai")
+	myconfig := driver.MysqlConfig{"root", "Ra1190@cm", "3306", "localhost", "test"}
+
+	db, err := driver.ConnectMysql(myconfig)
+	fmt.Println(db, err)
+
+	fmt.Println("this is ravi1")
+
+
 }
