@@ -1,9 +1,6 @@
 package main
 
-import (
-	"databasesample/driver"
-	"fmt"
-)
+import "fmt"
 
 func main() {
 
@@ -13,5 +10,6 @@ func main() {
 	fmt.Println(db, err)
 
 	fmt.Println("this is ravi1")
+
 
 }
