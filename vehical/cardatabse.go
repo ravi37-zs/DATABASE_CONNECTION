@@ -16,7 +16,6 @@ type Car struct {
 }
 
 func (s Store) Get(id int) (c Car) {
-
 	if id < 0 {
 		return Car{}
 	}

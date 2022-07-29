@@ -2,7 +2,6 @@ package vehical
 
 import (
 	"github.com/DATA-DOG/go-sqlmock"
-	_ "github.com/DATA-DOG/go-sqlmock"
 	"testing"
 )
 
@@ -16,7 +15,7 @@ func TestSet(t *testing.T) {
 		{"valid values", Car{1, "Safari", "MGN1", "Petrol"}, true},
 		{"valid values", Car{2, "Wagner", "FHG", "Petrol"}, true},
 		{"valid values", Car{3, "Benz", "MGN1", "Diesel"}, true},
-		{"valid values", Car{3, "Benz", "C-Class", "Diesel"}, false},
+		{"valid values", Car{3, "Benz", "C-Class", "Diesel"}, true},
 		{"valid values", Car{4, "XUV", "MGN2", "Petrol"}, true},
 	}
 	var s Store
