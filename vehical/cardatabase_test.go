@@ -40,7 +40,6 @@ func TestSet(t *testing.T) {
 	}
 
 }
-
 func TestGet(t *testing.T) {
 
 	testcases := []struct {
@@ -93,7 +92,6 @@ func TestDelete(t *testing.T) {
 	defer db.Close()
 	// now we execute our method
 	for i, value := range testcases {
-
 		mock.ExpectExec("DELETE FROM Car WHERE id").
 			WithArgs(value.id).
 			WillReturnResult(sqlmock.NewResult(1, 1)).WillReturnError(err)

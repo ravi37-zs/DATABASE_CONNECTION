@@ -29,7 +29,6 @@ func (s Store) Get(id int) (c Car) {
 	row.Close()
 	return
 }
-
 func (s Store) Set(c Car) bool {
 	res, err := s.db.Exec("insert into Car values(?,?,?,?)", c.Id, c.Name, c.Model, c.EngineType)
 	//fmt.Println("helooooooooooooooooooooo")
@@ -44,7 +43,6 @@ func (s Store) Set(c Car) bool {
 	}
 	return true
 }
-
 func (s Store) Delete(Id int) bool {
 	res, err := s.db.Exec("DELETE FROM Car WHERE id=?;", Id)
 	rows, err := res.RowsAffected()
